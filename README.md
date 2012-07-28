@@ -9,6 +9,7 @@ Bag.py: define basic classes;
 crawler.py: main func
 
 To use the program:
+
     1) change SMTP_HOST, TO_EMAILS in constants.py
 
     2) open a screen
