@@ -1,0 +1,4 @@
+BagSaleDetector
+===============
+
+Handbag Sale Detector
