@@ -4,18 +4,20 @@ Class: Bag
 @author: Lilian Weng (lilian.wengweng@gmail.com)
 '''
 from bs4 import BeautifulSoup
+import sys
 
 class Bag(str):
     def __init__(self, div_str):
         soup = BeautifulSoup(div_str.lower())
-        divs = soup.findAll('a', attrs={'class','recordtextlink'})
+       
+        divs = soup.findAll('a', attrs={'class':'recordtextlink'})
         self.brand = divs[0].get_text().strip()
         self.name = divs[1].get_text().strip()
 
-        p_divs = soup.findAll('p', attrs={'class','priceadorn'})
+        p_divs = soup.findAll('p', attrs={'class':'priceadorn'})
         self.orig_price = p_divs[0].get_text().replace(' ','')
         self.cur_price = p_divs[1].get_text().replace(' ','')
-
+        
         self.id = self.brand.replace(' ','-') + '-' + self.name.replace(' ','-')
 
 
@@ -39,17 +41,10 @@ class BagSet():
             self.bag_ids.add(bag.id)
 
     def exist(self, bag):
-        if not bag.id in self.bag_ids:
-            return False
-        else:
+        if bag.id in self.bag_ids:
             return True
-
-    def existAndAdd(self, bag):
-        if not bag.id in self.bag_ids:
-            self.add(bag)
-            return False
         else:
-            return True
+            return False
 
     def __str__(self):
         s = ""

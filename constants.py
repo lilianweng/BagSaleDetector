@@ -8,7 +8,8 @@ URL_NM_SALE_BAG = \
 
 
 SMTP_HOST = "localhost"
+FROM_EMAIL = "lilian.wengweng@gmail.com"
 TO_EMAILS = ["lilian.wengweng@gmail.com", "coocafez@gmail.com"]
 
 # sec
-DURATION = 60*60
+DURATION = 60*15

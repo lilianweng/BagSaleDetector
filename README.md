@@ -1,11 +1,9 @@
 BagSaleDetector v0.1
-Handbag Sale Detector
 ===============
+Handbag Sale Detector
 
-constants.py: NM sale link, smtp server host url, the duration between each check (by default, 1hr)
-
+constants.py: NM sale link, smtp server host url, the duration between each check (by default, 15min)
 Bag.py: define basic classes;
-
 crawler.py: main func
 
 To use the program:
@@ -17,6 +15,13 @@ To use the program:
     3) python crawler.py
 
     4) close the screen
+    
+
+TODO:
+
+1) add links to the newly reported item
+
+
 
 You are more than welcome to improve the code =)
 

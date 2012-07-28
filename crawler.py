@@ -11,7 +11,6 @@ import re
 import random
 import time
 import smtplib
-import string
 
 from Bag import Bag, BagSet
 
@@ -19,20 +18,17 @@ import smtplib
 from email.mime.text import MIMEText
 
 def send_email(new_bag_str):
-    FROM_ADDRESS = "givalink@cs.indiana.edu"
-    TO_ADDRESS = ["weng@indiana.edu", "dnikolov@indiana.edu"]
-    
-    text = "<a href='{0}'>{0}</a>\n".format(URL_NM_SALE_BAG) + \
+    text = URL_NM_SALE_BAG + "\n" + \
             strftime("%Y-%m-%d %H:%M:%S", gmtime()) + \
             new_bag_str
     msg = MIMEText(text)
 
     msg['Subject'] = "NM new handbag sales"
-    msg['From'] = "lilian.wengweng@gmail.com"
-    msg['To'] = TO_EMAILS
+    msg['From'] = FROM_EMAIL
+    msg['To'] = ','.join(TO_EMAILS)
 
     s = smtplib.SMTP(SMTP_HOST)
-    s.sendmail(FROM_ADDRESS, TO_ADDRESS, msg.as_string())
+    s.sendmail(FROM_EMAIL, TO_EMAILS, msg.as_string())
     s.quit()
 
 
@@ -55,21 +51,22 @@ if __name__ == '__main__':
     new_bags = BagSet()
     fout = open("nm_sale_handbags.dat", "a")
     while True:
+        cur_time = strftime("%Y-%m-%d %H:%M:%S", gmtime())
         cur_bags = parse_a_page(URL_NM_SALE_BAG)
         for b in cur_bags.bags:
-            if not last_bags.existAndAdd(b):
+            if not last_bags.exist(b):
                 new_bags.add(b)
 
-        if new_bags:
-            print 'Send email!'
+        if len(new_bags.bags) > 0:
+            print cur_time, 'Send email!'
             # Set up the email here
-            send_email(str(new_bags))
+            send_email( str(new_bags) )
             print >> fout, new_bags
         else:
-            print "No new bag!"
+            print cur_time, 'No new bag!'
 
         # Sleep for a while
-        # sleep_sec = random.randint(0, DURATION)
+        #test sleep_sec = random.randint(20, 30)
         time.sleep(DURATION)
 
         new_bags = BagSet()
