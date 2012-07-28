@@ -2,7 +2,7 @@ BagSaleDetector v0.1
 Handbag Sale Detector
 ===============
 
-constants.py: NM sale link, smtp server host url
+constants.py: NM sale link, smtp server host url, the duration between each check (by default, 1hr)
 
 Bag.py: define basic classes;
 
