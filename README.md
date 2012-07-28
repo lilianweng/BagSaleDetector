@@ -1,6 +1,8 @@
 BagSaleDetector v0.1
 ===============
 Handbag Sale Detector
+It checks the sale page (handbag) of Neiman Marcus every 15min, and
+send an email notification when there is a new one
 
 constants.py: NM sale link, smtp server host url, the duration between each check (by default, 15min)
 Bag.py: define basic classes;
