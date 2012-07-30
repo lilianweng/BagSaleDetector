@@ -4,28 +4,38 @@ Class: Bag
 @author: Lilian Weng (lilian.wengweng@gmail.com)
 '''
 from bs4 import BeautifulSoup
+from constants import *
 import sys
+import re
 
 class Bag(str):
     def __init__(self, div_str):
         soup = BeautifulSoup(div_str.lower())
-       
+
+        print div_str
+        print
+
         divs = soup.findAll('a', attrs={'class':'recordtextlink'})
         self.brand = divs[0].get_text().strip()
         self.name = divs[1].get_text().strip()
+        self.link = URL_NM + divs[0]['href']
 
         p_divs = soup.findAll('p', attrs={'class':'priceadorn'})
-        self.orig_price = p_divs[0].get_text().replace(' ','')
-        self.cur_price = p_divs[1].get_text().replace(' ','')
-        
+
+        self.orig_price = int(re.sub('[$|,]+', '', p_divs[0].get_text().split(':')[1]))
+        self.cur_price = int(re.sub('[$|,]+', '', p_divs[1].get_text().split(':')[1]))
+
         self.id = self.brand.replace(' ','-') + '-' + self.name.replace(' ','-')
 
 
     def __str__(self):
-        s = "{0} ${1}, ${2}\n".format(
-                self.id, 
+        s = "[{0}] {1}: ${2}->${3} ({4}%)\n{5}\n".format(
+                self.brand.capitalize(), 
+                self.name.capitalize(), 
                 self.orig_price, 
-                self.cur_price
+                self.cur_price,
+                int((self.orig_price-self.cur_price)*100/self.orig_price),
+                self.link
             )
         return s
 
@@ -49,7 +59,7 @@ class BagSet():
     def __str__(self):
         s = ""
         for b in self.bags:
-            s += str(b)
+            s += str(b) + "\n"
         return s
 
     def __bool__(self):

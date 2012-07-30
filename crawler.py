@@ -66,8 +66,9 @@ if __name__ == '__main__':
             print cur_time, 'No new bag!'
 
         # Sleep for a while
-        #test sleep_sec = random.randint(20, 30)
-        time.sleep(DURATION)
+        sleep_sec = random.randint(DURATION/2, DURATION)
+        # sleep_sec = DURATION
+        time.sleep(sleep_sec)
 
         new_bags = BagSet()
         last_bags = cur_bags
