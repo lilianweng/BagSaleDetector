@@ -34,15 +34,19 @@ def send_email(new_bag_str):
 
 def parse_a_page(url):
     bags = BagSet()
-    response = urllib2.urlopen(url)
-    html_source = response.read()
-    soup = BeautifulSoup(html_source)
-    divs = soup.findAll('div', attrs={'class': 'details'})
-    for div in divs:
-        div_str = str(div)
-        div_str = div_str.replace('\n', '')
-        div_str = re.sub('\s+', ' ', div_str)
-        bags.add( Bag(div_str) )
+    try:
+        response = urllib2.urlopen(url)
+        html_source = response.read()
+        soup = BeautifulSoup(html_source)
+        divs = soup.findAll('div', attrs={'class': 'details'})
+        for div in divs:
+            div_str = str(div)
+            div_str = div_str.replace('\n', '')
+            div_str = re.sub('\s+', ' ', div_str)
+            bags.add( Bag(div_str) )
+    except:
+        print '[ERROR]', sys.exc_info()
+
     return bags
 
 
@@ -66,7 +70,7 @@ if __name__ == '__main__':
             print cur_time, 'No new bag!'
 
         # Sleep for a while
-        sleep_sec = random.randint(DURATION/2, DURATION)
+        sleep_sec = random.randint(int(DURATION*4/5), DURATION)
         # sleep_sec = DURATION
         time.sleep(sleep_sec)
 
