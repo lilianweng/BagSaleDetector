@@ -12,9 +12,6 @@ class Bag(str):
     def __init__(self, div_str):
         soup = BeautifulSoup(div_str.lower())
 
-        print div_str
-        print
-
         divs = soup.findAll('a', attrs={'class':'recordtextlink'})
         self.brand = divs[0].get_text().strip()
         self.name = divs[1].get_text().strip()

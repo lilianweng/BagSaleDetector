@@ -19,7 +19,7 @@ from email.mime.text import MIMEText
 
 def send_email(new_bag_str):
     text = URL_NM_SALE_BAG + "\n" + \
-            strftime("%Y-%m-%d %H:%M:%S", gmtime()) + \
+            strftime("%Y-%m-%d %H:%M:%S", gmtime()) + "\n\n" + \
             new_bag_str
     msg = MIMEText(text)
 
