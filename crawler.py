@@ -39,13 +39,18 @@ def parse_a_page(url):
         html_source = response.read()
         soup = BeautifulSoup(html_source)
         divs = soup.findAll('div', attrs={'class': 'details'})
-        for div in divs:
-            div_str = str(div)
-            div_str = div_str.replace('\n', '')
-            div_str = re.sub('\s+', ' ', div_str)
-            bags.add( Bag(div_str) )
     except:
-        print '[ERROR]', sys.exc_info()
+        print '[ERROR][read source code]', sys.exc_info()
+        return bags
+    
+    for div in divs:
+        div_str = str(div)
+        div_str = div_str.replace('\n', '')
+        div_str = re.sub('\s+', ' ', div_str)
+        try:
+            bags.add( Bag(div_str) )
+        except:
+            print '[ERROR][create bag obj]', sys.exc_info()
 
     return bags
 

@@ -21,6 +21,7 @@ class Bag(str):
 
         self.orig_price = int(re.sub('[$|,]+', '', p_divs[0].get_text().split(':')[1]))
         self.cur_price = int(re.sub('[$|,]+', '', p_divs[1].get_text().split(':')[1]))
+        self.discount = int((self.orig_price-self.cur_price)*100/self.orig_price)
 
         self.id = self.brand.replace(' ','-') + '-' + self.name.replace(' ','-')
 
@@ -55,7 +56,8 @@ class BagSet():
 
     def __str__(self):
         s = ""
-        for b in self.bags:
+        sorted_bags = sorted(self.bags, key=lambda x:x.discount, reverse=True)
+        for b in sorted_bags:
             s += str(b) + "\n"
         return s
 
